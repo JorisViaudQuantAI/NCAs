@@ -1,0 +1,232 @@
+{
+  "config": {
+    "task": {
+      "name": "sudoku_ood",
+      "train": {
+        "n": 9000,
+        "source": "official"
+      },
+      "val": {
+        "split": "test",
+        "n": 180,
+        "source": "official"
+      },
+      "test": {
+        "source": "official"
+      }
+    },
+    "model": {
+      "preset": "sudoku_ood",
+      "overrides": {
+        "norm_fired_only": false
+      }
+    },
+    "train": {
+      "steps": 50000,
+      "batch_size": 256,
+      "pool_mult": 4,
+      "seed_ratio": 0.5,
+      "rollout": 48,
+      "chunk": 48,
+      "loss_window": "all",
+      "loss": "mse",
+      "lr": 0.0001,
+      "schedule": "cosine",
+      "warmup_ratio": 0.02,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "ema": 0.999,
+      "noise": {
+        "p_t": 0.1,
+        "p_s": 0.2,
+        "sigma": 0.15
+      },
+      "damage": {
+        "p": 0.1,
+        "n": 1,
+        "r_min": 0.1,
+        "r_max": 0.4
+      },
+      "swap": {
+        "p": 0.1
+      },
+      "augment": true,
+      "grad_checkpoint": false,
+      "amp": true,
+      "log_every": 50,
+      "eval_every": 2500,
+      "checkpoint_every": 1000,
+      "eval": {
+        "n": 180,
+        "depth": 96,
+        "k": 1
+      }
+    },
+    "engine": {
+      "backend": "fused",
+      "compile": true,
+      "block": 4,
+      "compile_mode": null,
+      "compile_backward_only": false,
+      "checkpoint_segment": null,
+      "checkpoint_candidates": [
+        0,
+        16,
+        8,
+        4,
+        2
+      ],
+      "vram_budget": 0.85,
+      "update_after_rollout": true,
+      "project_before_pad": null,
+      "fused_mix": null,
+      "fused_update": null,
+      "kernel_mix": false,
+      "kernel_backward": false,
+      "triton_mix": true,
+      "microbatch": null,
+      "checkpoint_recursive": false,
+      "channels_last": false,
+      "normalized_backward": false,
+      "compile_update": false,
+      "sparse_mlp": false,
+      "sparse_sobel": false,
+      "cache_fire": false,
+      "checkpoint_mlp": false,
+      "skip_zero_loss": false,
+      "linear_mlp": false,
+      "clone_microbatch_grads": false,
+      "dynamo_cache_size": 64,
+      "triton_mlp": true
+    },
+    "data_root": "data"
+  },
+  "seed": 0,
+  "params": 159760,
+  "model_config": {
+    "vocab_size": 10,
+    "channels": 128,
+    "c_in": 32,
+    "c_out": 32,
+    "output_tokens": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "in_offset": 0,
+    "out_offset": 0,
+    "c_task": 0,
+    "n_tasks": 0,
+    "embedding": "orthonormal",
+    "perception": "fixed_attn",
+    "heads": 16,
+    "grid_size": [
+      9,
+      9
+    ],
+    "padding": "wrap",
+    "wall_token": 2,
+    "update": "mlp",
+    "expansion": 4,
+    "hidden_from_perception": false,
+    "norm_groups": 4,
+    "norm_fired_only": false,
+    "sigma_init": 0.15,
+    "init_uniform": false,
+    "fire_rate": 0.8,
+    "head": "cosine",
+    "time_steps": 0,
+    "zero_init_update": false,
+    "attn_bias": true
+  },
+  "data": {
+    "train_source": "official:satnet",
+    "train_n": 9000,
+    "train_shape": [
+      9,
+      9
+    ],
+    "val_source": "official:rrn",
+    "val_n": 180,
+    "train_val_overlap": {
+      "puzzles": 0,
+      "solutions": 0
+    }
+  },
+  "engine": {
+    "config": {
+      "backend": "fused",
+      "compile": true,
+      "block": 4,
+      "compile_mode": null,
+      "compile_backward_only": false,
+      "checkpoint_segment": null,
+      "checkpoint_candidates": [
+        0,
+        16,
+        8,
+        4,
+        2
+      ],
+      "vram_budget": 0.85,
+      "update_after_rollout": true,
+      "project_before_pad": null,
+      "fused_mix": null,
+      "fused_update": null,
+      "kernel_mix": false,
+      "kernel_backward": false,
+      "triton_mix": true,
+      "microbatch": null,
+      "checkpoint_recursive": false,
+      "channels_last": false,
+      "normalized_backward": false,
+      "compile_update": false,
+      "sparse_mlp": false,
+      "sparse_sobel": false,
+      "cache_fire": false,
+      "checkpoint_mlp": false,
+      "skip_zero_loss": false,
+      "linear_mlp": false,
+      "clone_microbatch_grads": false,
+      "linear_value": false,
+      "attention_split_k": 1,
+      "iteration_graph": false,
+      "triton_mlp": true,
+      "dynamo_cache_size": 64
+    },
+    "options": {
+      "project_before_pad": true,
+      "fused_mix": true,
+      "fused_update": true,
+      "kernel_mix": false,
+      "kernel_backward": false,
+      "triton_mix": true,
+      "normalized_backward": false,
+      "compile_update": false,
+      "sparse_mlp": false,
+      "sparse_sobel": false,
+      "checkpoint_mlp": false,
+      "linear_mlp": false,
+      "linear_value": false,
+      "attention_split_k": 1,
+      "triton_mlp": true
+    },
+    "segment": null,
+    "compile_seconds": 2.8200480937957764,
+    "autotune": [],
+    "compiled": true
+  },
+  "device": "cuda (NVIDIA GeForce RTX 4060 Laptop GPU)",
+  "torch": "2.6.0+cu124",
+  "precision_policy": {
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "cudnn_benchmark": false
+  }
+}

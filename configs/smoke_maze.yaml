@@ -1,0 +1,16 @@
+# A tiny CPU run used by the tests and by docs/TUTORIAL.md level 0: a 9x9 maze NCA that
+# starts solving mazes after a few hundred steps (about a minute on 4 CPU cores).
+_base: maze_ood.yaml
+task:
+  train: {size: 9, n: 2000, source: auto}   # the generator is fine for a smoke run
+  val: {split: test, size: 9, n: 64, source: auto}
+  test: {source: auto}
+train:
+  steps: 300
+  batch_size: 16
+  rollout: 48
+  chunk: 48
+  log_every: 25
+  eval_every: 100
+  checkpoint_every: 100
+  eval: {n: 64, depth: 64, k: 1}

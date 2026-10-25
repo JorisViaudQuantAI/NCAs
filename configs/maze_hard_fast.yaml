@@ -1,0 +1,12 @@
+# Maze-Hard with the fast engine (docs/FAST_ENGINE.md). Maze-Hard is the configuration with
+# chunk 128 of 256 steps, where the checkpoint segment and the update order matter; the
+# update is applied after the rollout (engine.update_after_rollout), as in train.py since
+# 2026-10-13.
+_base: maze_hard.yaml
+engine:
+  backend: fused
+  compile: true
+  block: 4
+  checkpoint_segment: auto
+  vram_budget: 0.85
+  update_after_rollout: true

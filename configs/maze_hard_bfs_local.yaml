@@ -1,0 +1,6 @@
+# Maze-Hard with BFS targets whose ties between shortest paths are broken by a local rule
+# (maze.bfs_local_path). Our first BFS targets (`bfs`, global discovery order) were never learned
+# (DEVIATIONS 2026-10-19). Probe: --set train.stop_at=3000 (A* solves 27 % of the val mazes there).
+_base: maze_hard.yaml
+task:
+  args: {targets: bfs_local}

@@ -1,0 +1,8 @@
+# Full 150K update budget; every variant keeps norm_fired_only=true.
+_base: sudoku_ood.yaml
+ablations:
+  full: {}
+  no_async: {train.asynchronous: false}
+  no_perturb: {train.perturb: false}
+  no_replay: {train.replay: false}
+  self_attn: {model.overrides.perception: self_attn, engine.triton_mix: false}

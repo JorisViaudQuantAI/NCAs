@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nca-reasoning"
+version = "0.1.0"
+description = "Replication of 'Reasoning with Neural Cellular Automata' (Etcheverry et al., 2026) on a single consumer GPU"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Joris Viaud" }]
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "torch>=2.2",
+  "matplotlib>=3.8",
+  "pyyaml>=6.0",
+  "tqdm>=4.66",
+  "pillow>=10.0",
+  "imageio>=2.34",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+data = ["requests>=2.31"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:cacheprovider"

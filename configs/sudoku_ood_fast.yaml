@@ -1,0 +1,14 @@
+# Sudoku-OOD trained with the fast engine (docs/FAST_ENGINE.md): the same recipe as
+# sudoku_ood.yaml, executed by the fused backend with torch.compile over blocks of 4 steps.
+# Run with scripts/train_fast.py; outputs go to runs/engine/<name>/seed<k>, never to the
+# published runs/sudoku_ood/. Use --set engine.compile=false if torch.compile is not
+# available on the machine (scripts/bench_engine.py --probe tells).
+_base: sudoku_ood.yaml
+engine:
+  backend: fused            # reference | fused
+  compile: true             # torch.compile blocks of `block` steps
+  block: 4
+  compile_mode: null        # null | reduce-overhead (CUDA graphs) | max-autotune-no-cudagraphs
+  checkpoint_segment: auto  # none | q | auto (fastest segment that fits vram_budget)
+  vram_budget: 0.85
+  update_after_rollout: true

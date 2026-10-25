@@ -1,0 +1,32 @@
+# Maze-Hard, paper Table 3. Local deviation: 10,000 steps instead of 20,000 (see docs/DEVIATIONS.md).
+task:
+  name: maze_hard
+  args: {targets: astar}        # or bfs (then augmentation is on, see tasks/maze.py)
+  train: {n: 1000, source: official}   # never the generator (DEVIATIONS 2026-10-12)
+  val: {split: test, n: 128, source: official}
+  test: {source: official}   # evaluations compared with the paper never fall back to the generator
+model:
+  preset: maze_hard
+train:
+  steps: 10000                  # paper: 20000
+  batch_size: 32
+  pool_mult: 2
+  seed_ratio: 0.5
+  rollout: 256
+  chunk: 128
+  loss_window: all
+  loss: mse
+  lr: 5.0e-4
+  schedule: cosine
+  warmup_ratio: 0.25
+  weight_decay: 1.0e-4
+  grad_clip: 1.0
+  ema: 0.999
+  noise: {p_t: 0.1, p_s: 0.3, sigma: 0.15}
+  damage: {p: 0.1, n: 1, r_min: 0.1, r_max: 0.4}
+  swap: {p: 0.1}
+  augment: true                 # ignored for A* targets (MazeHard.augment is the identity then)
+  log_every: 50
+  eval_every: 1000
+  checkpoint_every: 500
+  eval: {n: 128, depth: 200, k: 1}

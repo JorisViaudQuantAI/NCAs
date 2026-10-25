@@ -1,0 +1,63 @@
+{
+  "depth": 256,
+  "k": 16,
+  "p_t": 0.1,
+  "p_s": 0.2,
+  "r": 0.25,
+  "n_boards": 500,
+  "rows": [
+    {
+      "sigma": 0,
+      "k1": 0.192,
+      "conf_k": 0.428,
+      "pass_k": 0.428,
+      "mean_trial": 0.19175
+    },
+    {
+      "sigma": 0.1,
+      "k1": 0.202,
+      "conf_k": 0.436,
+      "pass_k": 0.436,
+      "mean_trial": 0.19225
+    },
+    {
+      "sigma": 0.2,
+      "k1": 0.206,
+      "conf_k": 0.456,
+      "pass_k": 0.456,
+      "mean_trial": 0.1975
+    },
+    {
+      "sigma": 0.3,
+      "k1": 0.206,
+      "conf_k": 0.45,
+      "pass_k": 0.45,
+      "mean_trial": 0.20275
+    },
+    {
+      "sigma": 0.5,
+      "k1": 0.22,
+      "conf_k": 0.466,
+      "pass_k": 0.466,
+      "mean_trial": 0.206125
+    },
+    {
+      "sigma": 0.7,
+      "k1": 0.202,
+      "conf_k": 0.47,
+      "pass_k": 0.47,
+      "mean_trial": 0.206
+    },
+    {
+      "sigma": 1.0,
+      "k1": 0.202,
+      "conf_k": 0.458,
+      "pass_k": 0.458,
+      "mean_trial": 0.206625
+    }
+  ],
+  "run": "runs/sudoku_ood/seed1",
+  "seed": 1,
+  "seconds": 295.532288300019,
+  "source": "official:rrn"
+}

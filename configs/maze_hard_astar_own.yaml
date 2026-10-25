@@ -1,0 +1,6 @@
+# Control: Maze-Hard trained on paths computed by our own astar_path instead of the paths shipped
+# with the HRM data (no augmentation, as for A*). If it learns like the HRM paths, our target
+# pipeline is fine and BFS fails because of which shortest path it picks (DEVIATIONS 2026-10-19).
+_base: maze_hard.yaml
+task:
+  args: {targets: astar_own}

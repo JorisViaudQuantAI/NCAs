@@ -1,0 +1,22 @@
+{
+    "driver":  "610.60",
+    "seed":  2,
+    "wall_seconds_incl_compile":  6882.9572966999995,
+    "config":  "configs/budget_optimized/sudoku_ood.yaml",
+    "command":  "python scripts/train_fast.py --config configs/budget_optimized/sudoku_ood.yaml --seed 2 --out runs/engine/sudoku_ood_opt/seed2 --disable-tf32 --set data_root=data --set train.steps=50000 --set model.overrides.norm_fired_only=false --set engine.normalized_backward=false",
+    "overrides":  [
+                      "train.steps=50000",
+                      "model.overrides.norm_fired_only=false",
+                      "engine.normalized_backward=false",
+                      "data_root=data"
+                  ],
+    "task":  "sudoku_ood",
+    "gpu":  "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "disable_tf32":  true,
+    "versions":  {
+                     "torch":  "2.6.0+cu124",
+                     "cuda":  "12.4",
+                     "cudnn":  90100,
+                     "triton":  "3.2.0"
+                 }
+}

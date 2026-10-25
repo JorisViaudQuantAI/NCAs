@@ -1,0 +1,13 @@
+{
+  "final_eval": {
+    "val_exact": 0.2222222222222222,
+    "val_valid": 0.2222222222222222,
+    "val_cell_acc": 0.7047289965016659,
+    "val_conf": 0.986788272857666,
+    "step": 50000
+  },
+  "train_seconds": 29144.8390045166,
+  "steps": 50000,
+  "params": 159760,
+  "skipped_steps": 0
+}

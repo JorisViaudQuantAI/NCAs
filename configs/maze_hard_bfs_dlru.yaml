@@ -1,0 +1,7 @@
+﻿# Maze-Hard with BFS targets that expand neighbours down/left/right/up: on the unaugmented
+# mazes this is exactly the path shipped with the HRM data (the "A*" targets), and with the
+# 8 dihedral transformations recomputed on the fly it is our reading of the paper's BFS
+# targets (A.1). DEVIATIONS 2026-10-19.
+_base: maze_hard.yaml
+task:
+  args: {targets: bfs_dlru}

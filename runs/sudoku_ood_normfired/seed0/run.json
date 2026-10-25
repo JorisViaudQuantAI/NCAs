@@ -1,0 +1,124 @@
+{
+  "config": {
+    "task": {
+      "name": "sudoku_ood",
+      "train": {
+        "n": 9000,
+        "source": "official"
+      },
+      "val": {
+        "split": "test",
+        "n": 180,
+        "source": "official"
+      },
+      "test": {
+        "source": "official"
+      }
+    },
+    "model": {
+      "preset": "sudoku_ood",
+      "overrides": {
+        "norm_fired_only": true
+      }
+    },
+    "train": {
+      "steps": 50000,
+      "batch_size": 256,
+      "pool_mult": 4,
+      "seed_ratio": 0.5,
+      "rollout": 48,
+      "chunk": 48,
+      "loss_window": "all",
+      "loss": "mse",
+      "lr": 0.0001,
+      "schedule": "cosine",
+      "warmup_ratio": 0.02,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "ema": 0.999,
+      "noise": {
+        "p_t": 0.1,
+        "p_s": 0.2,
+        "sigma": 0.15
+      },
+      "damage": {
+        "p": 0.1,
+        "n": 1,
+        "r_min": 0.1,
+        "r_max": 0.4
+      },
+      "swap": {
+        "p": 0.1
+      },
+      "augment": true,
+      "grad_checkpoint": false,
+      "amp": true,
+      "log_every": 50,
+      "eval_every": 2500,
+      "checkpoint_every": 1000,
+      "eval": {
+        "n": 180,
+        "depth": 96,
+        "k": 1
+      }
+    }
+  },
+  "seed": 0,
+  "params": 159760,
+  "model_config": {
+    "vocab_size": 10,
+    "channels": 128,
+    "c_in": 32,
+    "c_out": 32,
+    "output_tokens": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "in_offset": 0,
+    "out_offset": 0,
+    "c_task": 0,
+    "n_tasks": 0,
+    "embedding": "orthonormal",
+    "perception": "fixed_attn",
+    "heads": 16,
+    "grid_size": [
+      9,
+      9
+    ],
+    "padding": "wrap",
+    "wall_token": 2,
+    "update": "mlp",
+    "expansion": 4,
+    "hidden_from_perception": false,
+    "norm_groups": 4,
+    "norm_fired_only": true,
+    "sigma_init": 0.15,
+    "init_uniform": false,
+    "fire_rate": 0.8,
+    "head": "cosine",
+    "time_steps": 0,
+    "zero_init_update": false,
+    "attn_bias": true
+  },
+  "data": {
+    "train_source": "official:satnet",
+    "train_n": 9000,
+    "train_shape": [
+      9,
+      9
+    ],
+    "val_source": "official:rrn",
+    "val_n": 180,
+    "train_val_overlap": {
+      "puzzles": 0,
+      "solutions": 0
+    }
+  }
+}

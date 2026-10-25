@@ -1,0 +1,1249 @@
+{
+  "config": "configs/sudoku_ood.yaml",
+  "overrides": [
+    "task.train.source=generated",
+    "task.train.n=64",
+    "task.val.source=generated",
+    "task.val.n=8",
+    "data_root=data",
+    "train.rollout=8",
+    "train.chunk=8"
+  ],
+  "hardware": {
+    "torch": "2.14.1+cu130",
+    "python": "3.13.16",
+    "platform": "Linux-6.18.44-fc-v114-x86_64-with-glibc2.39",
+    "device": "cpu",
+    "cpu_threads": 4,
+    "commit": "6bfa7eb",
+    "triton": "3.8.0"
+  },
+  "iters": 10,
+  "warmup": 3,
+  "results": [
+    {
+      "variant": "reference",
+      "engine": {
+        "backend": "reference",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.30012631199997486,
+        "seconds_mean": 0.25867272729999513,
+        "seconds_std": 0.017718945450412242,
+        "seconds_min": 0.2352747120000913,
+        "seconds": [
+          0.2547300940000241,
+          0.2352747120000913,
+          0.2544460110000273,
+          0.27321078099998886,
+          0.26379401999997754,
+          0.27818400599994675,
+          0.2446465979999175,
+          0.293577366999898,
+          0.23669268100002228,
+          0.2521710030000577
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.07394701780003743,
+        "seconds_per_step": 0.009243377225004679
+      },
+      "flops_per_step": {
+        "forward": 806354944,
+        "forward_backward": 2419064832
+      },
+      "ok": true,
+      "wall_seconds": 4.923595609000131,
+      "speedup_vs_reference": 1.0
+    },
+    {
+      "variant": "reference",
+      "engine": {
+        "backend": "reference",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.2656128780001836,
+        "seconds_mean": 0.25220030040002256,
+        "seconds_std": 0.03163998374999876,
+        "seconds_min": 0.20122305100017002,
+        "seconds": [
+          0.24256703000014568,
+          0.27306949700005134,
+          0.29784897599984106,
+          0.2768208610000329,
+          0.2701141509999161,
+          0.2762935959999595,
+          0.2599934669999584,
+          0.21369006100007937,
+          0.20122305100017002,
+          0.21038231400007135
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.06319451399999707,
+        "seconds_per_step": 0.007899314249999633
+      },
+      "flops_per_step": {
+        "forward": 806354944,
+        "forward_backward": 2419064832
+      },
+      "ok": true,
+      "wall_seconds": 3.699654733999978,
+      "speedup_vs_reference": 1.0
+    },
+    {
+      "variant": "nopad",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": false,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.20378258999994614,
+        "seconds_mean": 0.2516624353000907,
+        "seconds_std": 0.040877635874617964,
+        "seconds_min": 0.17427067300013732,
+        "seconds": [
+          0.27335996300007537,
+          0.23766502300009051,
+          0.26682126600007905,
+          0.2620625760000621,
+          0.29973310100012895,
+          0.29807837700013806,
+          0.2510332730000755,
+          0.27159827700006645,
+          0.17427067300013732,
+          0.1820018240000536
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.09848603419995924,
+        "seconds_per_step": 0.012310754274994905
+      },
+      "flops_per_step": {
+        "forward": 806354944,
+        "forward_backward": 2419064832
+      },
+      "vs_reference": {
+        "state_max_abs": 1.4901161193847656e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.1109291315078735,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 2.9802322387695312e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 4.6211699719999615,
+      "speedup_vs_reference": 1.0278559332525934
+    },
+    {
+      "variant": "nopad",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": false,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.2537871010001709,
+        "seconds_mean": 0.20376261409999188,
+        "seconds_std": 0.0151787527258157,
+        "seconds_min": 0.17629032000013467,
+        "seconds": [
+          0.1930170339999222,
+          0.19675202200005515,
+          0.21894564399985939,
+          0.23423647799995706,
+          0.20115646800013565,
+          0.17629032000013467,
+          0.20196247499984565,
+          0.21680317100003776,
+          0.19777063999981692,
+          0.20069188900015433
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.07455867919998127,
+        "seconds_per_step": 0.009319834899997659
+      },
+      "flops_per_step": {
+        "forward": 806354944,
+        "forward_backward": 2419064832
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0010562539100646973,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.1109501123428345,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.341535210609436,
+        "grad_max_abs": 0.0001220703125,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 3.696588471000041,
+      "speedup_vs_reference": 1.2377162587650203
+    },
+    {
+      "variant": "nomix",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": false,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.2550755339998432,
+        "seconds_mean": 0.25772249930003,
+        "seconds_std": 0.011336829559597132,
+        "seconds_min": 0.24594485400007216,
+        "seconds": [
+          0.24926457399988067,
+          0.24594485400007216,
+          0.2488921730000584,
+          0.24979607600016607,
+          0.27801376000002165,
+          0.2641024140000354,
+          0.25365671200006545,
+          0.25273130300001867,
+          0.25617440199994235,
+          0.2786487250000391
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.08243661900000916,
+        "seconds_per_step": 0.010304577375001145
+      },
+      "flops_per_step": {
+        "forward": 764411904,
+        "forward_backward": 2293235712
+      },
+      "vs_reference": {
+        "state_max_abs": 1.7881393432617188e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.1109291315078735,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 2.9802322387695312e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 4.496353253000052,
+      "speedup_vs_reference": 1.0036870199635108
+    },
+    {
+      "variant": "nomix",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": false,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.30255895499999497,
+        "seconds_mean": 0.2510842769999499,
+        "seconds_std": 0.06173736196914911,
+        "seconds_min": 0.17807166899979165,
+        "seconds": [
+          0.2801921179998317,
+          0.31320688300002075,
+          0.35544901699995535,
+          0.3084484579999298,
+          0.28427385800000593,
+          0.22406029500007207,
+          0.17807166899979165,
+          0.17947938599991176,
+          0.20761387499987904,
+          0.18004721100010102
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.0499617427999965,
+        "seconds_per_step": 0.006245217849999563
+      },
+      "flops_per_step": {
+        "forward": 764411904,
+        "forward_backward": 2293235712
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.110950231552124,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.3415074348449707,
+        "grad_max_abs": 7.62939453125e-05,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 4.065819036999983,
+      "speedup_vs_reference": 1.0044448159534614
+    },
+    {
+      "variant": "noupd",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": false,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.21995004599989443,
+        "seconds_mean": 0.24373267329999634,
+        "seconds_std": 0.031169321264972825,
+        "seconds_min": 0.19939437399989401,
+        "seconds": [
+          0.25972597199984193,
+          0.2186674980000589,
+          0.24127025000007052,
+          0.19939437399989401,
+          0.28101219199993466,
+          0.3016420480000761,
+          0.2691425610000806,
+          0.22891721399992093,
+          0.22040679300016564,
+          0.2171478309999202
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.05783184480001182,
+        "seconds_per_step": 0.007228980600001478
+      },
+      "flops_per_step": {
+        "forward": 764411904,
+        "forward_backward": 2293235712
+      },
+      "vs_reference": {
+        "state_max_abs": 1.7881393432617188e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.1109291315078735,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 2.9802322387695312e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 4.000724536000007,
+      "speedup_vs_reference": 1.0612968864523549
+    },
+    {
+      "variant": "noupd",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": false,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.20643880300008277,
+        "seconds_mean": 0.19332849840000108,
+        "seconds_std": 0.017084038028271034,
+        "seconds_min": 0.1681547179998688,
+        "seconds": [
+          0.1890725119999388,
+          0.1681547179998688,
+          0.1979606990000775,
+          0.17421977999993032,
+          0.20834959800004071,
+          0.17822046500009492,
+          0.22539253900004041,
+          0.19706583400011368,
+          0.18418242400002782,
+          0.21066641499987782
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.07683934220003721,
+        "seconds_per_step": 0.009604917775004652
+      },
+      "flops_per_step": {
+        "forward": 764411904,
+        "forward_backward": 2293235712
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0010562539100646973,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.1109501123428345,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.3415288925170898,
+        "grad_max_abs": 0.0001220703125,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 3.5330242380000527,
+      "speedup_vs_reference": 1.304516936133308
+    },
+    {
+      "variant": "fused",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.25943883699983417,
+        "seconds_mean": 0.2982558741000048,
+        "seconds_std": 0.01785133072407172,
+        "seconds_min": 0.2710506450000594,
+        "seconds": [
+          0.2710506450000594,
+          0.27114599299989095,
+          0.28087746599999264,
+          0.2894430079998074,
+          0.31426064800007225,
+          0.3080877200000032,
+          0.2989658850001433,
+          0.31503406899992115,
+          0.3151305260000754,
+          0.3185627810000824
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.08870102539985965,
+        "seconds_per_step": 0.011087628174982456
+      },
+      "flops_per_step": {
+        "forward": 764411904,
+        "forward_backward": 2293235712
+      },
+      "vs_reference": {
+        "state_max_abs": 1.7881393432617188e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.1109291315078735,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 2.9802322387695312e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 5.035155017000079,
+      "speedup_vs_reference": 0.8672846027946545
+    },
+    {
+      "variant": "fused",
+      "engine": {
+        "backend": "fused",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.24334489400007442,
+        "seconds_mean": 0.26186550290001376,
+        "seconds_std": 0.02683105059681868,
+        "seconds_min": 0.20005223299995123,
+        "seconds": [
+          0.3008339360001173,
+          0.28771676299993487,
+          0.2852099350000117,
+          0.262392779000038,
+          0.20005223299995123,
+          0.26673656399998436,
+          0.2438544639999236,
+          0.2556476570000541,
+          0.24735728900009235,
+          0.2688534090000303
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.0937585644000137,
+        "seconds_per_step": 0.011719820550001713
+      },
+      "flops_per_step": {
+        "forward": 764411904,
+        "forward_backward": 2293235712
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0010562539100646973,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.1109501123428345,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.3415275812149048,
+        "grad_max_abs": 0.0001220703125,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 4.609565796999959,
+      "speedup_vs_reference": 0.9630909669545836
+    },
+    {
+      "variant": "refcompiled",
+      "engine": {
+        "backend": "reference",
+        "compile": true,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 21.523489362999953,
+        "seconds_mean": 0.1604689772000029,
+        "seconds_std": 0.0076205479823161625,
+        "seconds_min": 0.15403683899990028,
+        "seconds": [
+          0.15403683899990028,
+          0.159780549000061,
+          0.15947664100008296,
+          0.16107763599984537,
+          0.15449470099997598,
+          0.1820959550000225,
+          0.15893943099990793,
+          0.15564452100011295,
+          0.16142686600005618,
+          0.15771663300006367
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.05885090540000419,
+        "seconds_per_step": 0.007356363175000524
+      },
+      "vs_reference": {
+        "state_max_abs": 2.980232238769531e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.110929250717163,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 5.960464477539063e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 28.75898107299986,
+      "speedup_vs_reference": 1.6119796599538023
+    },
+    {
+      "variant": "refcompiled",
+      "engine": {
+        "backend": "reference",
+        "compile": true,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 21.558828824000102,
+        "seconds_mean": 0.10379198479995466,
+        "seconds_std": 0.003364959985492248,
+        "seconds_min": 0.0991170309998779,
+        "seconds": [
+          0.1028025149998939,
+          0.102156887999854,
+          0.0991170309998779,
+          0.11110686200004238,
+          0.09983749599996372,
+          0.10653935499999534,
+          0.10645525499990072,
+          0.10262504399997852,
+          0.10476379600004293,
+          0.1025156059999972
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.0541005529999893,
+        "seconds_per_step": 0.006762569124998663
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0007849931716918945,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.110950231552124,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.3415297269821167,
+        "grad_max_abs": 0.0001220703125,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 29.162377192999884,
+      "speedup_vs_reference": 2.4298629695357046
+    },
+    {
+      "variant": "compiled",
+      "engine": {
+        "backend": "fused",
+        "compile": true,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 19.98714281599996,
+        "seconds_mean": 0.23459701550000317,
+        "seconds_std": 0.040833844516020484,
+        "seconds_min": 0.18834845000014866,
+        "seconds": [
+          0.18834845000014866,
+          0.2501757570000791,
+          0.20410799399996904,
+          0.2446978919999765,
+          0.34546168399992894,
+          0.2351300060001904,
+          0.2248587089998182,
+          0.21704104500008725,
+          0.2212749549998989,
+          0.21487366299993482
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.05563604059998397,
+        "seconds_per_step": 0.006954505074997996
+      },
+      "vs_reference": {
+        "state_max_abs": 2.980232238769531e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.110929250717163,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 1.4901161193847656e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 29.610683462999987,
+      "speedup_vs_reference": 1.10262582304672
+    },
+    {
+      "variant": "compiled",
+      "engine": {
+        "backend": "fused",
+        "compile": true,
+        "block": 1,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 22.539716648999956,
+        "seconds_mean": 0.11710175790001358,
+        "seconds_std": 0.006805445730083523,
+        "seconds_min": 0.09796197000014217,
+        "seconds": [
+          0.12045962499996676,
+          0.12385293299985278,
+          0.11663202199997613,
+          0.11791412800016587,
+          0.1207884230000218,
+          0.12127015299984123,
+          0.118417227000009,
+          0.11862992200008193,
+          0.11509117600007812,
+          0.09796197000014217
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.040848711000080584,
+        "seconds_per_step": 0.005106088875010073
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0007849931716918945,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.110950231552124,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.3415058851242065,
+        "grad_max_abs": 6.103515625e-05,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 31.207954726000025,
+      "speedup_vs_reference": 2.1536850080027135
+    },
+    {
+      "variant": "compiled4",
+      "engine": {
+        "backend": "fused",
+        "compile": true,
+        "block": 4,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 61.66960763899988,
+        "seconds_mean": 0.16477577200002996,
+        "seconds_std": 0.010450151599371623,
+        "seconds_min": 0.14469774200006214,
+        "seconds": [
+          0.17976239800009353,
+          0.1637126680000165,
+          0.15975464400003148,
+          0.15954542400004357,
+          0.17236819300001116,
+          0.17989651199991386,
+          0.17126894900002299,
+          0.14469774200006214,
+          0.15801195600010942,
+          0.15873923399999512
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.05159644679997655,
+        "seconds_per_step": 0.0064495558499970684
+      },
+      "vs_reference": {
+        "state_max_abs": 2.980232238769531e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.110929250717163,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 2.9802322387695312e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 82.39131291700005,
+      "speedup_vs_reference": 1.5698468540626718
+    },
+    {
+      "variant": "compiled4",
+      "engine": {
+        "backend": "fused",
+        "compile": true,
+        "block": 4,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 60.912688505999995,
+        "seconds_mean": 0.12641053410000042,
+        "seconds_std": 0.03281205751641775,
+        "seconds_min": 0.10654584299982162,
+        "seconds": [
+          0.11922117199992499,
+          0.22379419300000336,
+          0.11332972800005336,
+          0.11058912900011819,
+          0.1167368929998247,
+          0.12487661400018624,
+          0.11887771900001098,
+          0.11664673900008893,
+          0.11348731099997167,
+          0.10654584299982162
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.03706811940000989,
+        "seconds_per_step": 0.004633514925001236
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0007849931716918945,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.1109503507614136,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.3415058851242065,
+        "grad_max_abs": 6.103515625e-05,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 83.63704860999997,
+      "speedup_vs_reference": 1.9950892715990964
+    },
+    {
+      "variant": "compiled8",
+      "engine": {
+        "backend": "fused",
+        "compile": true,
+        "block": 8,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": false,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 68.19822339000007,
+        "seconds_mean": 0.19690386690003833,
+        "seconds_std": 0.06449879926980945,
+        "seconds_min": 0.14441312100007053,
+        "seconds": [
+          0.21553849600013564,
+          0.17321223199996894,
+          0.1779682670000966,
+          0.17712440400009655,
+          0.16849224499992488,
+          0.16396265299999868,
+          0.3836408060001304,
+          0.1827257259999442,
+          0.18196071900001698,
+          0.14441312100007053
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.0610195721999844,
+        "seconds_per_step": 0.00762744652499805
+      },
+      "vs_reference": {
+        "state_max_abs": 2.980232238769531e-07,
+        "state_max_abs_ref": 0.6861827373504639,
+        "loss_a": 1.1109291315078735,
+        "loss_b": 1.110929250717163,
+        "loss_abs": 1.1920928955078125e-07,
+        "grad_norm_a": 1.3413914442062378,
+        "grad_norm_b": 1.3413914442062378,
+        "grad_max_abs": 1.4901161193847656e-08,
+        "grad_max_abs_ref": 0.43776261806488037
+      },
+      "ok": true,
+      "wall_seconds": 106.44640885700005,
+      "speedup_vs_reference": 1.3137005959934491
+    },
+    {
+      "variant": "compiled8",
+      "engine": {
+        "backend": "fused",
+        "compile": true,
+        "block": 8,
+        "compile_mode": null,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 32,
+      "rollout": 8,
+      "chunk": 8,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 69.35106488499991,
+        "seconds_mean": 0.1000939727000059,
+        "seconds_std": 0.007734124231998526,
+        "seconds_min": 0.08841542400000435,
+        "seconds": [
+          0.08841542400000435,
+          0.08915478599988091,
+          0.09480817700000443,
+          0.09795149199999287,
+          0.09659372999999505,
+          0.1081220599999142,
+          0.10494405800000095,
+          0.10062727500007895,
+          0.10837694200017722,
+          0.11194578300001012
+        ]
+      },
+      "forward": {
+        "steps": 8,
+        "seconds_mean": 0.04261928980004086,
+        "seconds_per_step": 0.005327411225005107
+      },
+      "vs_reference": {
+        "state_max_abs": 0.0007849931716918945,
+        "state_max_abs_ref": 0.6867430806159973,
+        "loss_a": 1.110950231552124,
+        "loss_b": 1.110950231552124,
+        "loss_abs": 0.0,
+        "grad_norm_a": 1.3415056467056274,
+        "grad_norm_b": 1.3415058851242065,
+        "grad_max_abs": 6.103515625e-05,
+        "grad_max_abs_ref": 0.43817138671875
+      },
+      "ok": true,
+      "wall_seconds": 106.68344385700016,
+      "speedup_vs_reference": 2.5196352347398405
+    }
+  ]
+}

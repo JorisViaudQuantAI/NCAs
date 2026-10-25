@@ -1,0 +1,5 @@
+# L4 BF16 execution candidate; full paper update budget, no recipe shortening.
+# RTX 4060 measurements: results/bench/pc_rtx4060/README.md.
+_base: ../l4_round3/sudoku_ood.yaml
+engine:
+  triton_mlp: true

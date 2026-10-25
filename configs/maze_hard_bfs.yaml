@@ -1,0 +1,3 @@
+_base: maze_hard.yaml
+task:
+  args: {targets: bfs}

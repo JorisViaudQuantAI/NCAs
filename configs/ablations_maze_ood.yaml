@@ -1,0 +1,8 @@
+# Training-ingredient ablations of Figure 7A on maze_ood. Each variant is run with 3 seeds by
+# scripts/run_ablations.py, which applies one of these override sets to maze_ood.yaml.
+_base: maze_ood.yaml
+ablations:
+  full: {}
+  no_async: {train.asynchronous: false}
+  no_perturb: {train.perturb: false}
+  no_replay: {train.replay: false}

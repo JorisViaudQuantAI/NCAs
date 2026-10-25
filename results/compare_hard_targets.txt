@@ -1,0 +1,12 @@
+﻿1000 official Maze-Hard train mazes, HRM path vs each rule
+rule                              identical   path cells differing
+local from start DLRU                100.0%                    0.0
+local from goal DLRU                  95.6%                    0.4
+local from start DRLU                 93.1%                    0.5
+local from goal DRLU                  92.0%                    0.6
+local from start RDLU                  5.1%                    8.6
+local from goal DRUL                   4.9%                    9.0
+local from start LDRU                  4.8%                    8.5
+local from goal DLUR                   4.6%                    8.8
+astar (ours)                           1.2%                   17.1
+bfs (first discoverer)                 0.2%                   17.6

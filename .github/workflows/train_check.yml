@@ -1,0 +1,47 @@
+# Check that the Maze-OOD recipe converges on a CPU runner (about 30 min), on generated mazes:
+# the runner has no official data and does not download it (the configs ask for official data
+# since 2026-10-12, so the source is overridden here; this checks the recipe, not the benchmark). Trigger it from the
+# Actions tab, or push a commit whose message contains [train-check]; the training log is printed
+# in the job output and uploaded as an artifact.
+name: train-check
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      config:
+        description: config file
+        default: configs/maze_ood.yaml
+      steps:
+        description: training steps
+        default: "5000"
+      extra:
+        description: extra --set overrides (space separated KEY=VALUE)
+        default: ""
+jobs:
+  train:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[train-check]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e .
+      - name: train
+        run: |
+          SETS=""
+          for kv in ${{ github.event.inputs.extra || '' }}; do SETS="$SETS --set $kv"; done
+          python scripts/train.py --config ${{ github.event.inputs.config || 'configs/maze_ood.yaml' }} --seed 0 --out runs/ci \
+            --set train.steps=${{ github.event.inputs.steps || '5000' }} --set train.log_every=100 \
+            --set train.eval_every=500 --set task.train.download=false --set task.val.download=false \
+            --set task.train.source=generated --set task.val.source=generated $SETS --quiet
+          echo "=== log.jsonl ==="; cat runs/ci/log.jsonl
+          echo "=== summary.json ==="; cat runs/ci/summary.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: run
+          path: runs/ci

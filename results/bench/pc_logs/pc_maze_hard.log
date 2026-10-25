@@ -1,0 +1,98 @@
+﻿preset engine: {"backend": "fused", "compile": true, "block": 4, "compile_mode": null, "compile_backward_only": false, "checkpoint_candidates": [0, 16, 8, 4, 2], "vram_budget": 0.85, "update_after_rollout": true, "project_before_pad": null, "fused_mix": null, "fused_update": null, "kernel_mix": false, "kernel_backward": "triton", "triton_mix": false, "microbatch": null, "checkpoint_recursive": false, "channels_last": false, "normalized_backward": false, "compile_update": false, "sparse_mlp": false, "sparse_sobel": false, "cache_fire": false, "checkpoint_mlp": false, "skip_zero_loss": false, "linear_mlp": true, "clone_microbatch_grads": false, "linear_value": false, "attention_split_k": 1, "iteration_graph": false, "triton_mlp": false, "dynamo_cache_size": 64}
+hardware: {"torch": "2.6.0+cu124", "python": "3.11.9", "platform": "Windows-10-10.0.26200-SP0", "device": "cuda", "cpu_threads": 14, "commit": "54545a4", "dirty": true, "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU", "gpu_memory_gb": 7.99560546875, "cuda": "12.4", "cudnn": 90100, "triton": "3.2.0"}
+
+== reference:fp32 ==
+  iteration 671.5 ms (±1.8), first 0.96 s, no-grad 1.35 ms/step, full 676.6 ms, peak 5.93 GiB
+
+== reference:fp32:seg16 ==
+  iteration 847.8 ms (±2.7), first 0.85 s, no-grad 1.34 ms/step, full 855.5 ms, peak 0.84 GiB
+
+== reference:bf16 ==
+  iteration 756.7 ms (±12.2), first 1.06 s, no-grad 1.35 ms/step, full 749.0 ms, peak 3.01 GiB
+
+== reference:bf16:seg16 ==
+  iteration 881.0 ms (±12.1), first 0.89 s, no-grad 1.35 ms/step, full 882.8 ms, peak 0.45 GiB
+
+== fused:fp32 ==
+  iteration 669.7 ms (±3.1), first 0.71 s, no-grad 1.34 ms/step, full 674.2 ms, peak 5.93 GiB, vs ref: state 0.00e+00, grad 9.54e-07
+
+== fused:fp32:seg16 ==
+  iteration 851.5 ms (±7.8), first 0.85 s, no-grad 1.34 ms/step, full 853.2 ms, peak 0.84 GiB, vs ref: state 0.00e+00, grad 1.43e-06
+
+== fused:bf16 ==
+  iteration 769.5 ms (±9.9), first 0.80 s, no-grad 1.35 ms/step, full 763.8 ms, peak 3.01 GiB, vs ref: state 0.00e+00, grad 0.00e+00
+
+== fused:bf16:seg16 ==
+  iteration 901.5 ms (±23.7), first 0.88 s, no-grad 1.35 ms/step, full 881.6 ms, peak 0.45 GiB, vs ref: state 0.00e+00, grad 0.00e+00
+
+== refcompiled:fp32 ==
+python.exe : W1017 14:48:19.638000 32980 Lib\site-packages\torch\_inductor\utils.py:1137] [0/0] Not enough SMs to use 
+max_autotune_gemm mode
+Au caractère <tmp>\
+scratchpad\phase1.ps1:29 : 3
++   & $py $w @($j.a) --iters 10 --warmup 3 --seed 0 --set $d --out "res ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (W1017 14:48:19....otune_gemm mode:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  iteration 601.4 ms (±1.7), first 15.04 s, no-grad 1.11 ms/step, full 604.7 ms, peak 5.93 GiB, vs ref: state 0.00e+00, grad 9.54e-07
+
+== refcompiled:fp32:seg16 ==
+  iteration 747.5 ms (±1.5), first 0.75 s, no-grad 1.10 ms/step, full 750.6 ms, peak 0.86 GiB, vs ref: state 0.00e+00, grad 9.54e-07
+
+== refcompiled:bf16 ==
+  iteration 910.2 ms (±0.9), first 12.21 s, no-grad 1.11 ms/step, full 913.4 ms, peak 3.02 GiB, vs ref: state 0.00e+00, grad 1.79e-02
+
+== refcompiled:bf16:seg16 ==
+  iteration 1299.2 ms (±1.8), first 1.30 s, no-grad 1.11 ms/step, full 1301.7 ms, peak 0.46 GiB, vs ref: state 0.00e+00, grad 1.79e-02
+
+== compiled4:fp32 ==
+  iteration 607.2 ms (±2.4), first 26.62 s, no-grad 1.11 ms/step, full 609.0 ms, peak 6.02 GiB, vs ref: state 0.00e+00, grad 3.81e-06
+
+== compiled4:fp32:seg16 ==
+  iteration 749.7 ms (±0.7), first 0.75 s, no-grad 1.11 ms/step, full 754.4 ms, peak 0.95 GiB, vs ref: state 0.00e+00, grad 3.81e-06
+
+== compiled4:bf16 ==
+  iteration 920.2 ms (±2.9), first 22.27 s, no-grad 1.13 ms/step, full 921.0 ms, peak 3.07 GiB, vs ref: state 0.00e+00, grad 1.79e-02
+
+== compiled4:bf16:seg16 ==
+  iteration 1297.2 ms (±1.5), first 1.30 s, no-grad 1.11 ms/step, full 1300.9 ms, peak 0.52 GiB, vs ref: state 0.00e+00, grad 1.79e-02
+
+== preset:fp32 ==
+.venv\Lib\site-packages\torch\_inductor\compile_fx.py:194: UserWarning: TensorFloat32 
+tensor cores for float32 matrix multiplication available but not enabled. Consider setting 
+`torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+  iteration 603.7 ms (±4.9), first 11.18 s, no-grad 0.89 ms/step, full 606.7 ms, peak 5.92 GiB, vs ref: state 0.00e+00, grad 1.43e-06
+
+== preset:fp32:seg16 ==
+  iteration 735.9 ms (±6.9), first 0.73 s, no-grad 0.88 ms/step, full 733.3 ms, peak 0.84 GiB, vs ref: state 0.00e+00, grad 9.54e-07
+
+== preset:bf16 ==
+  iteration 511.7 ms (±22.1), first 6.35 s, no-grad 0.88 ms/step, full 480.4 ms, peak 3.04 GiB, vs ref: state 0.00e+00, grad 1.79e-02
+
+== preset:bf16:seg16 ==
+  iteration 602.1 ms (±22.5), first 0.60 s, no-grad 0.89 ms/step, full 597.4 ms, peak 0.47 GiB, vs ref: state 0.00e+00, grad 1.79e-02
+
+summary:
+  reference    fp32 seg -       671.5 ms/iter  x1.00  full    676.6 ms  x1.00
+  reference    fp32 seg 16      847.8 ms/iter  x1.00  full    855.5 ms  x1.00
+  reference    bf16 seg -       756.7 ms/iter  x1.00  full    749.0 ms  x1.00
+  reference    bf16 seg 16      881.0 ms/iter  x1.00  full    882.8 ms  x1.00
+  fused        fp32 seg -       669.7 ms/iter  x1.00  full    674.2 ms  x1.00
+  fused        fp32 seg 16      851.5 ms/iter  x1.00  full    853.2 ms  x1.00
+  fused        bf16 seg -       769.5 ms/iter  x0.98  full    763.8 ms  x0.98
+  fused        bf16 seg 16      901.5 ms/iter  x0.98  full    881.6 ms  x1.00
+  refcompiled  fp32 seg -       601.4 ms/iter  x1.12  full    604.7 ms  x1.12
+  refcompiled  fp32 seg 16      747.5 ms/iter  x1.13  full    750.6 ms  x1.14
+  refcompiled  bf16 seg -       910.2 ms/iter  x0.83  full    913.4 ms  x0.82
+  refcompiled  bf16 seg 16     1299.2 ms/iter  x0.68  full   1301.7 ms  x0.68
+  compiled4    fp32 seg -       607.2 ms/iter  x1.11  full    609.0 ms  x1.11
+  compiled4    fp32 seg 16      749.7 ms/iter  x1.13  full    754.4 ms  x1.13
+  compiled4    bf16 seg -       920.2 ms/iter  x0.82  full    921.0 ms  x0.81
+  compiled4    bf16 seg 16     1297.2 ms/iter  x0.68  full   1300.9 ms  x0.68
+  preset       fp32 seg -       603.7 ms/iter  x1.11  full    606.7 ms  x1.12
+  preset       fp32 seg 16      735.9 ms/iter  x1.15  full    733.3 ms  x1.17
+  preset       bf16 seg -       511.7 ms/iter  x1.48  full    480.4 ms  x1.56
+  preset       bf16 seg 16      602.1 ms/iter  x1.46  full    597.4 ms  x1.48
+written results/bench/pc_maze_hard.json (9.2min)

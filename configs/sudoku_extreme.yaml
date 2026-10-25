@@ -1,0 +1,34 @@
+# Sudoku-Extreme, paper Table 3. Local deviations: 30,000 steps (paper 200,000), batch 128
+# (paper 800). See docs/DEVIATIONS.md.
+task:
+  name: sudoku_extreme
+  train: {n: 1000, source: official}   # never the generator (DEVIATIONS 2026-10-12)
+  val: {split: test, n: 140, source: official}
+  test: {source: official}   # evaluations compared with the paper never fall back to the generator
+model:
+  preset: sudoku_extreme
+train:
+  steps: 30000                  # paper: 200000
+  batch_size: 128               # paper: 800
+  pool_mult: 4
+  seed_ratio: 0.25
+  rollout: 96
+  chunk: 96
+  grad_checkpoint: false        # local: 5.1 GiB peak without it (RTX 4060 Laptop), 1.58 -> 1.22 s/step
+  amp: true                     # local: bf16 autocast, 2.27 -> 1.22 s/step with the line above (DEVIATIONS 2026-10-13)
+  loss_window: last
+  loss: mse
+  lr: 1.0e-4
+  schedule: cosine
+  warmup_ratio: 0.02
+  weight_decay: 1.0e-4
+  grad_clip: 1.0
+  ema: 0.999
+  noise: {p_t: 0.1, p_s: 0.2, sigma: 0.15}
+  damage: {p: 0.1, n: 1, r_min: 0.1, r_max: 0.4}
+  swap: {p: 0.1}
+  augment: true
+  log_every: 50
+  eval_every: 2500
+  checkpoint_every: 1000
+  eval: {n: 140, depth: 256, k: 1}

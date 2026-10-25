@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this replication, please cite the original paper and this repository."
+title: "NCAs: a budget replication of Reasoning with Neural Cellular Automata"
+authors:
+  - family-names: Viaud
+    given-names: Joris
+year: 2026
+repository-code: "https://github.com/JorisViaudQuantAI/NCAs"
+references:
+  - type: article
+    title: "Reasoning with Neural Cellular Automata"
+    authors:
+      - {family-names: Etcheverry, given-names: Mayalen}
+      - {family-names: Miotti, given-names: Pietro}
+      - {family-names: Sirbu, given-names: Aidan}
+      - {family-names: Schürholt, given-names: Konstantin}
+      - {family-names: Drozdova, given-names: Mariia}
+      - {family-names: Ghosh, given-names: Arna}
+      - {family-names: Agüera y Arcas, given-names: Blaise}
+      - {family-names: Manyika, given-names: James}
+      - {family-names: Richards, given-names: Blake}
+      - {family-names: Niklasson, given-names: Eyvind}
+    year: 2026
+    url: "https://arxiv.org/abs/2609.36126"

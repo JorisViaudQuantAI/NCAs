@@ -1,0 +1,40 @@
+﻿hardware: {"torch": "2.6.0+cu124", "python": "3.11.9", "platform": "Windows-10-10.0.26200-SP0", "device": "cuda", "cpu_threads": 14, "commit": "54545a4", "dirty": true, "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU", "gpu_memory_gb": 7.99560546875, "cuda": "12.4", "cudnn": 90100, "triton": "3.2.0"}
+python.exe : [sudoku] loading data\sudoku\sudoku_extreme_train_n1000_seed0_official.npz
+Au caractère <tmp>\
+scratchpad\phase1.ps1:29 : 3
++   & $py $w @($j.a) --iters 10 --warmup 3 --seed 0 --set $d --out "res ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([sudoku] loadin...d0_official.npz:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[sudoku] loading data\sudoku\sudoku_extreme_test_n140_seed0_official_strat_v2.npz
+
+== reference:fp32 ==
+  iteration 46177.7 ms (±25.1), first 36.11 s, no-grad 4.58 ms/step, full 38044.8 ms, peak 8.84 GiB
+
+== reference:bf16 ==
+  iteration 1212.1 ms (±1.8), first 1.43 s, no-grad 4.59 ms/step, full 1221.2 ms, peak 5.20 GiB
+
+== fused:fp32 ==
+  iteration 14435.6 ms (±19.4), first 14.54 s, no-grad 6.48 ms/step, full 14537.2 ms, peak 8.37 GiB, vs ref: state 0.00e+00, grad 5.96e-08
+
+== fused:bf16 ==
+  iteration 831.6 ms (±1.6), first 0.86 s, no-grad 3.23 ms/step, full 836.6 ms, peak 4.94 GiB, vs ref: state 0.00e+00, grad 1.32e-04
+
+== compiled4:fp32 ==
+W1017 15:20:52.744000 8180 Lib\site-packages\torch\_inductor\utils.py:1137] [0/0] Not enough SMs to use 
+max_autotune_gemm mode
+  equivalence check FAILED (timing kept): RuntimeError: cuDNN error: CUDNN_STATUS_BAD_PARAM_STREAM_MISMATCH
+Traceback (most recent call last):
+  File "<tmp>\scrat
+chpad\bench_wrap.py", line 39, in <module>
+    bench_engine.main()
+  File "scripts\bench_engine.py", line 213, in main
+    torch.cuda.empty_cache()
+  File ".venv\Lib\site-packages\torch\cuda\memory.py", line 218, in empty_cache
+    torch._C._cuda_emptyCache()
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

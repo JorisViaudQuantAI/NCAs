@@ -1,0 +1,113 @@
+{
+  "config": {
+    "task": {
+      "name": "maze_hard",
+      "args": {
+        "targets": "astar_own"
+      },
+      "train": {
+        "n": 1000,
+        "source": "official"
+      },
+      "val": {
+        "split": "test",
+        "n": 128,
+        "source": "official"
+      },
+      "test": {
+        "source": "official"
+      }
+    },
+    "model": {
+      "preset": "maze_hard"
+    },
+    "train": {
+      "steps": 10000,
+      "batch_size": 32,
+      "pool_mult": 2,
+      "seed_ratio": 0.5,
+      "rollout": 256,
+      "chunk": 128,
+      "loss_window": "all",
+      "loss": "mse",
+      "lr": 0.0005,
+      "schedule": "cosine",
+      "warmup_ratio": 0.25,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "ema": 0.999,
+      "noise": {
+        "p_t": 0.1,
+        "p_s": 0.3,
+        "sigma": 0.15
+      },
+      "damage": {
+        "p": 0.1,
+        "n": 1,
+        "r_min": 0.1,
+        "r_max": 0.4
+      },
+      "swap": {
+        "p": 0.1
+      },
+      "augment": true,
+      "log_every": 50,
+      "eval_every": 1000,
+      "checkpoint_every": 500,
+      "eval": {
+        "n": 128,
+        "depth": 200,
+        "k": 1
+      },
+      "stop_at": 3000
+    }
+  },
+  "seed": 0,
+  "params": 41284,
+  "model_config": {
+    "vocab_size": 5,
+    "channels": 32,
+    "c_in": 32,
+    "c_out": 3,
+    "output_tokens": [
+      0,
+      1
+    ],
+    "in_offset": 0,
+    "out_offset": 0,
+    "c_task": 0,
+    "n_tasks": 0,
+    "embedding": "onehot",
+    "perception": "kernels",
+    "heads": 4,
+    "grid_size": null,
+    "padding": "wall",
+    "wall_token": 2,
+    "update": "mlp",
+    "expansion": 2,
+    "hidden_from_perception": true,
+    "norm_groups": 0,
+    "norm_fired_only": false,
+    "sigma_init": 0.25,
+    "init_uniform": false,
+    "fire_rate": 0.8,
+    "head": "l2",
+    "time_steps": 0,
+    "zero_init_update": true,
+    "attn_bias": true
+  },
+  "data": {
+    "train_source": "official",
+    "train_n": 1000,
+    "train_shape": [
+      30,
+      30
+    ],
+    "val_source": "official",
+    "val_n": 128,
+    "train_val_overlap": {
+      "puzzles": 0,
+      "solutions": 0
+    }
+  }
+}

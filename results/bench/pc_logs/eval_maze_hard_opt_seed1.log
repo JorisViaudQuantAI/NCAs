@@ -1,0 +1,2 @@
+﻿maze_hard: 1000 boards, D=200  K=1 0.585  conf@64 0.652  pass@64 0.751  (3627s) -> results/bench/quality/maze_hard_opt/maze_hard_astar_seed1.json
+maze_hard: 1000 boards, D=200  K=1 0.592  conf@64 0.647  pass@64 0.760  (1482s) -> results/bench/quality/maze_hard_opt/maze_hard_astar_noise_seed1.json

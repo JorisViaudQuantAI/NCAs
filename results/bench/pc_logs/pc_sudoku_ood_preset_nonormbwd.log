@@ -1,0 +1,30 @@
+﻿preset engine: {"backend": "fused", "compile": true, "block": 4, "compile_mode": null, "compile_backward_only": false, "checkpoint_candidates": [0, 16, 8, 4, 2], "vram_budget": 0.85, "update_after_rollout": true, "project_before_pad": null, "fused_mix": null, "fused_update": null, "kernel_mix": false, "kernel_backward": false, "triton_mix": true, "microbatch": null, "checkpoint_recursive": false, "channels_last": false, "normalized_backward": false, "compile_update": false, "sparse_mlp": false, "sparse_sobel": false, "cache_fire": false, "checkpoint_mlp": false, "skip_zero_loss": false, "linear_mlp": false, "clone_microbatch_grads": false, "linear_value": false, "attention_split_k": 1, "iteration_graph": false, "triton_mlp": false, "dynamo_cache_size": 64}
+hardware: {"torch": "2.6.0+cu124", "python": "3.11.9", "platform": "Windows-10-10.0.26200-SP0", "device": "cuda", "cpu_threads": 14, "commit": "54545a4", "dirty": true, "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU", "gpu_memory_gb": 7.99560546875, "cuda": "12.4", "cudnn": 90100, "triton": "3.2.0"}
+.\.venv\Scripts\python.exe : [sudoku] loading 
+data\sudoku\sudoku_ood_train_n9000_seed0_official.npz
+Au caractère Ligne:2 : 1
++ .\.venv\Scripts\python.exe $w --config configs/sudoku_ood.yaml --vari ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([sudoku] loadin...d0_official.npz:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[sudoku] loading data\sudoku\sudoku_ood_test_n180_seed0_official.npz
+
+== reference:fp32 ==
+  iteration 789.0 ms (±10.9), first 0.99 s, no-grad 3.92 ms/step, full 778.9 ms, peak 4.57 GiB
+
+== reference:bf16 ==
+  iteration 562.6 ms (±2.3), first 0.72 s, no-grad 3.93 ms/step, full 573.7 ms, peak 2.62 GiB
+
+== preset:fp32 ==
+  iteration 326.6 ms (±0.4), first 5.09 s, no-grad 2.06 ms/step, full 357.6 ms, peak 4.09 GiB, vs ref: state 2.09e-07, grad 4.40e-07
+
+== preset:bf16 ==
+  iteration 153.2 ms (±8.0), first 2.62 s, no-grad 2.06 ms/step, full 158.1 ms, peak 2.40 GiB, vs ref: state 2.86e-03, grad 7.26e-04
+
+summary:
+  reference    fp32 seg -       789.0 ms/iter  x1.00  full    778.9 ms  x1.00
+  reference    bf16 seg -       562.6 ms/iter  x1.00  full    573.7 ms  x1.00
+  preset       fp32 seg -       326.6 ms/iter  x2.42  full    357.6 ms  x2.18
+  preset       bf16 seg -       153.2 ms/iter  x3.67  full    158.1 ms  x3.63
+written results/bench/pc_sudoku_ood_preset_nonormbwd.json (1.0min)

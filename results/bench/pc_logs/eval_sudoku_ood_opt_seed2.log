@@ -1,0 +1,9 @@
+﻿python.exe : [sudoku] loading data\sudoku\sudoku_ood_test_n1000_seed0_official.npz
+Au caractère <tmp>\
+scratchpad\phase2.ps1:27 : 5
++     & $py @a *>> $log
++     ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([sudoku] loadin...d0_official.npz:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+sudoku_ood: 1000 boards, D=256  K=1 0.243  conf@128 0.631  pass@128 0.675  (659s) -> results/bench/quality/sudoku_ood_opt/sudoku_ood_seed2.json

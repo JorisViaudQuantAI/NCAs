@@ -1,0 +1,390 @@
+{
+  "config": "configs/sudoku_ood.yaml",
+  "overrides": [
+    "data_root=data"
+  ],
+  "seed": 0,
+  "train": {
+    "steps": 50000,
+    "batch_size": 256,
+    "pool_mult": 4,
+    "seed_ratio": 0.5,
+    "rollout": 48,
+    "chunk": 48,
+    "loss_window": "all",
+    "loss": "mse",
+    "lr": 0.0001,
+    "schedule": "cosine",
+    "warmup_ratio": 0.02,
+    "weight_decay": 0.0001,
+    "grad_clip": 1.0,
+    "ema": 0.999,
+    "noise": {
+      "p_t": 0.1,
+      "p_s": 0.2,
+      "sigma": 0.15
+    },
+    "damage": {
+      "p": 0.1,
+      "n": 1,
+      "r_min": 0.1,
+      "r_max": 0.4
+    },
+    "swap": {
+      "p": 0.1
+    },
+    "augment": true,
+    "asynchronous": true,
+    "replay": true,
+    "perturb": true,
+    "log_every": 50,
+    "eval_every": 2500,
+    "checkpoint_every": 1000,
+    "amp": true,
+    "grad_checkpoint": false,
+    "eval": {
+      "n": 180,
+      "depth": 96,
+      "k": 1
+    }
+  },
+  "resolved_config": {
+    "task": {
+      "name": "sudoku_ood",
+      "train": {
+        "n": 9000,
+        "source": "official"
+      },
+      "val": {
+        "split": "test",
+        "n": 180,
+        "source": "official"
+      },
+      "test": {
+        "source": "official"
+      }
+    },
+    "model": {
+      "preset": "sudoku_ood"
+    },
+    "train": {
+      "steps": 50000,
+      "batch_size": 256,
+      "pool_mult": 4,
+      "seed_ratio": 0.5,
+      "rollout": 48,
+      "chunk": 48,
+      "loss_window": "all",
+      "loss": "mse",
+      "lr": 0.0001,
+      "schedule": "cosine",
+      "warmup_ratio": 0.02,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "ema": 0.999,
+      "noise": {
+        "p_t": 0.1,
+        "p_s": 0.2,
+        "sigma": 0.15
+      },
+      "damage": {
+        "p": 0.1,
+        "n": 1,
+        "r_min": 0.1,
+        "r_max": 0.4
+      },
+      "swap": {
+        "p": 0.1
+      },
+      "augment": true,
+      "grad_checkpoint": false,
+      "amp": true,
+      "log_every": 50,
+      "eval_every": 2500,
+      "checkpoint_every": 1000,
+      "eval": {
+        "n": 180,
+        "depth": 96,
+        "k": 1
+      }
+    },
+    "data_root": "data"
+  },
+  "model_config": {
+    "vocab_size": 10,
+    "channels": 128,
+    "c_in": 32,
+    "c_out": 32,
+    "output_tokens": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "in_offset": 0,
+    "out_offset": 0,
+    "c_task": 0,
+    "n_tasks": 0,
+    "embedding": "orthonormal",
+    "perception": "fixed_attn",
+    "heads": 16,
+    "grid_size": [
+      9,
+      9
+    ],
+    "padding": "wrap",
+    "wall_token": 2,
+    "update": "mlp",
+    "expansion": 4,
+    "hidden_from_perception": false,
+    "norm_groups": 4,
+    "norm_fired_only": false,
+    "sigma_init": 0.15,
+    "init_uniform": false,
+    "fire_rate": 0.8,
+    "head": "cosine",
+    "time_steps": 0,
+    "zero_init_update": false,
+    "attn_bias": true
+  },
+  "hardware": {
+    "torch": "2.6.0+cu124",
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "device": "cuda",
+    "cpu_threads": 14,
+    "commit": "362e52a",
+    "dirty": true,
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "gpu_memory_gb": 7.99560546875,
+    "cuda": "12.4",
+    "cudnn": 90100,
+    "triton": "3.2.0",
+    "driver": "610.60"
+  },
+  "iters": 10,
+  "warmup": 3,
+  "results": [
+    {
+      "variant": "reference",
+      "engine": {
+        "backend": "reference",
+        "compile": false,
+        "block": 1,
+        "compile_mode": null,
+        "compile_backward_only": false,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "kernel_mix": false,
+        "kernel_backward": false,
+        "triton_mix": false,
+        "microbatch": null,
+        "checkpoint_recursive": false,
+        "channels_last": false,
+        "normalized_backward": false,
+        "compile_update": false,
+        "sparse_mlp": false,
+        "sparse_sobel": false,
+        "cache_fire": false,
+        "checkpoint_mlp": false,
+        "skip_zero_loss": false,
+        "linear_mlp": false,
+        "clone_microbatch_grads": false,
+        "linear_value": false,
+        "attention_split_k": 1,
+        "iteration_graph": false,
+        "triton_mlp": false,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 256,
+      "rollout": 48,
+      "chunk": 48,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 1.0385631999815814,
+        "seconds_mean": 0.558762679999927,
+        "seconds_std": 0.0012738943103632657,
+        "seconds_min": 0.5569562999880873,
+        "seconds": [
+          0.5590264999773353,
+          0.5602204999886453,
+          0.558212999952957,
+          0.5581850999733433,
+          0.5594931000377983,
+          0.5569562999880873,
+          0.5615201000473462,
+          0.5581822000094689,
+          0.5582492999965325,
+          0.5575807000277564
+        ],
+        "first_peak_allocated_gb": 2.619802951812744,
+        "first_peak_reserved_gb": 3.046875,
+        "warmup_peak_allocated_gb": 2.620626926422119,
+        "warmup_peak_reserved_gb": 3.046875,
+        "timed_compiled_graphs": 0,
+        "timed_custom_kernel_variants": 0,
+        "timed_cuda_graph_recordings": 0,
+        "total_cuda_graph_recordings": 0,
+        "peak_allocated_gb": 2.620626926422119,
+        "peak_reserved_gb": 3.046875
+      },
+      "forward": {
+        "steps": 48,
+        "seconds_mean": 0.1887419599923305,
+        "seconds_per_step": 0.003932124166506886
+      },
+      "full": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 0.6267763000214472,
+        "skipped_steps": 0,
+        "pool_size": 1024,
+        "augment": true,
+        "perturb": true,
+        "seconds_mean": 0.5682162700046319,
+        "seconds_std": 0.0006724579316052195,
+        "seconds_min": 0.5671583999646828,
+        "seconds": [
+          0.5680548999807797,
+          0.5687943000230007,
+          0.5684861000045203,
+          0.5671583999646828,
+          0.5680686000268906,
+          0.5675545000121929,
+          0.5694640000001527,
+          0.568764400028158,
+          0.5674272000323981,
+          0.5683902999735437
+        ],
+        "first_peak_allocated_gb": 2.671985626220703,
+        "first_peak_reserved_gb": 3.130859375,
+        "warmup_peak_allocated_gb": 2.6823930740356445,
+        "warmup_peak_reserved_gb": 3.130859375,
+        "timed_compiled_graphs": 0,
+        "timed_custom_kernel_variants": 0,
+        "timed_cuda_graph_recordings": 0,
+        "total_cuda_graph_recordings": 0,
+        "peak_allocated_gb": 2.6823930740356445,
+        "peak_reserved_gb": 3.130859375
+      },
+      "flops_per_step": {
+        "forward": 6450839552,
+        "forward_backward": 19352518656
+      },
+      "ok": true,
+      "wall_seconds": 16.501427400042303,
+      "baseline": "reference:bf16",
+      "speedup_vs_reference": 1.0,
+      "speedup_full_vs_reference": 1.0
+    },
+    {
+      "variant": "preset",
+      "engine": {
+        "backend": "fused",
+        "compile": true,
+        "block": 4,
+        "compile_mode": null,
+        "compile_backward_only": false,
+        "checkpoint_segment": null,
+        "checkpoint_candidates": [
+          0,
+          16,
+          8,
+          4,
+          2
+        ],
+        "vram_budget": 0.85,
+        "update_after_rollout": true,
+        "project_before_pad": null,
+        "fused_mix": null,
+        "fused_update": null,
+        "kernel_mix": false,
+        "kernel_backward": false,
+        "triton_mix": true,
+        "microbatch": null,
+        "checkpoint_recursive": false,
+        "channels_last": false,
+        "normalized_backward": false,
+        "compile_update": false,
+        "sparse_mlp": false,
+        "sparse_sobel": false,
+        "cache_fire": false,
+        "checkpoint_mlp": false,
+        "skip_zero_loss": false,
+        "linear_mlp": false,
+        "clone_microbatch_grads": false,
+        "linear_value": false,
+        "attention_split_k": 1,
+        "iteration_graph": false,
+        "triton_mlp": true,
+        "dynamo_cache_size": 64
+      },
+      "amp": true,
+      "segment": null,
+      "batch_size": 256,
+      "rollout": 48,
+      "chunk": 48,
+      "train": {
+        "iters": 10,
+        "warmup": 3,
+        "first_iteration_seconds": 29.83164950000355,
+        "seconds_mean": 0.13034018999896943,
+        "seconds_std": 0.0013503042559897562,
+        "seconds_min": 0.12867979996372014,
+        "seconds": [
+          0.13157730002421886,
+          0.1293665999546647,
+          0.12867979996372014,
+          0.13095319998683408,
+          0.1298792000161484,
+          0.12872200005222112,
+          0.1310572000220418,
+          0.13303799997083843,
+          0.12910339998779818,
+          0.13102520001120865
+        ],
+        "first_peak_allocated_gb": 2.6823930740356445,
+        "first_peak_reserved_gb": 3.212890625,
+        "warmup_peak_allocated_gb": 2.6823930740356445,
+        "warmup_peak_reserved_gb": 3.212890625,
+        "timed_compiled_graphs": 0,
+        "timed_custom_kernel_variants": 0,
+        "timed_cuda_graph_recordings": 0,
+        "total_cuda_graph_recordings": 0,
+        "peak_allocated_gb": 2.4050865173339844,
+        "peak_reserved_gb": 2.71875
+      },
+      "ok": false,
+      "error": "ValueError: triton_mlp requires CUDA BF16 autocast",
+      "wall_seconds": 31.694450499955565
+    }
+  ],
+  "tf32": {
+    "matmul": false,
+    "cudnn": false
+  },
+  "preset_config": "configs/budget_optimized/sudoku_ood.yaml",
+  "preset_overrides": [
+    "engine.normalized_backward=false"
+  ],
+  "wrapper": "bench_wrap.py: bench_engine.main() with TF32 off and a 'preset' variant"
+}

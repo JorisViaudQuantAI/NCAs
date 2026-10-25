@@ -1,0 +1,7 @@
+# Same recipe and seeds as the main model. Use --trainer fast and a fresh --out-root.
+_base: ../l4_round3/maze_ood.yaml
+ablations:
+  full: {}
+  no_async: {train.asynchronous: false}
+  no_perturb: {train.perturb: false}
+  no_replay: {train.replay: false}

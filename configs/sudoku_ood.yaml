@@ -1,0 +1,33 @@
+# Sudoku-OOD, paper Table 3. Local deviation: 50,000 steps instead of 150,000 (see docs/DEVIATIONS.md).
+task:
+  name: sudoku_ood
+  train: {n: 9000, source: official}   # never the generator (DEVIATIONS 2026-10-12)
+  val: {split: test, n: 180, source: official}    # 10 boards per difficulty level
+  test: {source: official}   # evaluations compared with the paper never fall back to the generator
+model:
+  preset: sudoku_ood
+train:
+  steps: 50000                  # paper: 150000
+  batch_size: 256
+  pool_mult: 4
+  seed_ratio: 0.5
+  rollout: 48
+  chunk: 48
+  loss_window: all
+  loss: mse
+  lr: 1.0e-4
+  schedule: cosine
+  warmup_ratio: 0.02
+  weight_decay: 1.0e-4
+  grad_clip: 1.0
+  ema: 0.999
+  noise: {p_t: 0.1, p_s: 0.2, sigma: 0.15}
+  damage: {p: 0.1, n: 1, r_min: 0.1, r_max: 0.4}
+  swap: {p: 0.1}
+  augment: true
+  grad_checkpoint: false        # local: 1.7 GB of VRAM without it, 0.98 vs 1.2 s/step (DEVIATIONS 2026-10-11)
+  amp: true                     # local: bf16 autocast, 0.65 s/step with the line above
+  log_every: 50
+  eval_every: 2500
+  checkpoint_every: 1000
+  eval: {n: 180, depth: 96, k: 1}

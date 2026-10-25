@@ -1,0 +1,27 @@
+﻿hardware: {"torch": "2.6.0+cu124", "python": "3.11.9", "platform": "Windows-10-10.0.26200-SP0", "device": "cuda", "cpu_threads": 14, "commit": "54545a4", "dirty": true, "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU", "gpu_memory_gb": 7.99560546875, "cuda": "12.4", "cudnn": 90100, "triton": "3.2.0"}
+.\.venv\Scripts\python.exe : [sudoku] loading 
+data\sudoku\sudoku_extreme_train_n1000_seed0_official.npz
+Au caractère Ligne:4 : 1
++ .\.venv\Scripts\python.exe $w --config configs/sudoku_extreme.yaml -- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([sudoku] loadin...d0_official.npz:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[sudoku] loading data\sudoku\sudoku_extreme_test_n140_seed0_official_strat_v2.npz
+
+== reference:bf16 ==
+  iteration 1233.2 ms (±33.9), first 1.64 s, no-grad 4.60 ms/step, full 1219.9 ms, peak 5.20 GiB
+
+== fused:bf16 ==
+  iteration 831.2 ms (±1.5), first 0.87 s, no-grad 3.28 ms/step, full 856.6 ms, peak 4.93 GiB, vs ref: state 0.00e+00, grad 1.32e-04
+
+== compiled4:bf16 ==
+W1017 15:34:04.141000 16448 Lib\site-packages\torch\_inductor\utils.py:1137] [0/0] Not enough SMs to use 
+max_autotune_gemm mode
+  iteration 367.8 ms (±9.2), first 50.73 s, no-grad 3.12 ms/step, full 383.1 ms, peak 4.87 GiB, vs ref: state 2.42e-03, grad 2.38e-03
+
+summary:
+  reference    bf16 seg -      1233.2 ms/iter  x1.00  full   1219.9 ms  x1.00
+  fused        bf16 seg -       831.2 ms/iter  x1.48  full    856.6 ms  x1.42
+  compiled4    bf16 seg -       367.8 ms/iter  x3.35  full    383.1 ms  x3.18
+written results/bench/pc_sudoku_extreme.json (2.1min)

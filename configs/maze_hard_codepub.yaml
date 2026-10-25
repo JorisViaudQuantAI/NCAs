@@ -1,0 +1,49 @@
+# Maze-Hard, "public-code recipe" arm of an A/B against configs/maze_hard.yaml: the same task,
+# data, model preset and validation, with the training-recipe switches set to the behaviour of
+# the authors' public JAX code (see the config-key table of docs/PAPER_MAP.md). The lines
+# marked "public code" are the only differences from configs/maze_hard.yaml.
+# chunk_start / writeback are implemented by the reference trainer only (scripts/train.py);
+# the fast engine refuses this config.
+task:
+  name: maze_hard
+  args: {targets: astar}
+  train: {n: 1000, source: official}   # never the generator (DEVIATIONS 2026-10-12)
+  val: {split: test, n: 128, source: official}
+  test: {source: official}   # evaluations compared with the paper never fall back to the generator
+model:
+  preset: maze_hard
+  overrides:   # public code: semantic embeddings, readout over every token, init (border = wall, as theirs)
+    embedding: semantic
+    output_tokens: [0, 1, 2, 3, 4]
+    init_style: public
+train:
+  steps: 20000                  # public code and paper (configs/maze_hard.yaml: 10000)
+  batch_size: 32
+  pool_mult: 2
+  seed_ratio: 0.5
+  rollout: 256
+  chunk: 128
+  chunk_start: per_sample       # public code: each board draws its own BPTT chunk start
+  writeback: chunk_end          # public code: the pool gets each board's state at its chunk end
+  loss_window: all
+  loss: mse
+  loss_reduce: mean             # public code: MSE averaged over the output channels
+  lr: 5.0e-4
+  schedule: constant            # public code: constant after the warmup
+  warmup_ratio: 0.25
+  init_lr_ratio: 2.0            # public code: the warmup goes from 2 x lr down to lr
+  weight_decay: 1.0e-4
+  betas: [0.9, 0.95]            # public code
+  grad_clip: 1.0
+  ema: 0.999
+  ema_warmup: false             # public code: constant EMA decay from step 0
+  noise: {p_t: 0.1, p_s: 0.3, sigma: 0.15}
+  damage: {p: 0.1, n: 4, r_min: 0.1, r_max: 0.4, fill: 0.0, geometry: official}   # public code: n 4, make_circle_masks discs
+  swap: {p: 0.1}
+  swap_source: pool             # public code: the swapped board comes from another pool entry
+  batch_noise: {p: 0.1, ps: 0.3, sigma: 0.15}   # public code: noise on the prepared batch
+  augment: false                # public code (A* targets: MazeHard.augment is the identity anyway)
+  log_every: 50
+  eval_every: 1000
+  checkpoint_every: 500
+  eval: {n: 128, depth: 200, k: 1}

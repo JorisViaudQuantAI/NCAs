@@ -1,0 +1,29 @@
+# Table 6 architecture; compute fixture only, generated font glyphs, not official MNIST.
+# B=1 is a declared local assumption: Table 6 does not specify the paper batch size.
+# Replay/perturbation disabled here: a fresh-state dense-training compute probe.
+task:
+  name: visual_sudoku
+  train: {source: generated, n: 4}
+model:
+  overrides: {vocab_size: 1, channels: 256, c_in: 1, c_out: 1, in_offset: 0, out_offset: 1, output_tokens: [0], perception: sobel, heads: 3, padding: wrap, expansion: 8, norm_groups: 0, init_uniform: true, sigma_init: 0.1, fire_rate: 0.5, head: pixels, zero_init_update: true}
+train:
+  steps: 93000
+  batch_size: 1
+  pool_mult: 1
+  replay: false
+  seed_ratio: 1.0
+  perturb: false
+  augment: false
+  rollout: 1024
+  chunk: 1024
+  loss_window: all
+  loss: mse
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  schedule: constant
+  warmup_ratio: 0.0
+  ema: 0.999
+  amp: true
+engine:
+  checkpoint_segment: 1
+  checkpoint_recursive: true

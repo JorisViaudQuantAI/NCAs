@@ -1,0 +1,41 @@
+# Uniform FP32 evaluation, measured on L4; use eval_tts.py --engine-config.
+# Measured batch=32, depth=300, K=1; other sizes/K need validation.
+# Pass this as an evaluation engine config, not as a training recipe.
+engine:
+  backend: fused
+  compile: true
+  block: 16
+  compile_mode: reduce-overhead
+  compile_backward_only: false
+  checkpoint_segment: null
+  checkpoint_candidates:
+  - 0
+  - 16
+  - 8
+  - 4
+  - 2
+  vram_budget: 0.85
+  update_after_rollout: true
+  project_before_pad: null
+  fused_mix: null
+  fused_update: null
+  kernel_mix: false
+  kernel_backward: false
+  triton_mix: false
+  microbatch: null
+  checkpoint_recursive: false
+  channels_last: false
+  normalized_backward: false
+  compile_update: false
+  sparse_mlp: false
+  sparse_sobel: false
+  cache_fire: false
+  checkpoint_mlp: false
+  skip_zero_loss: false
+  linear_mlp: false
+  clone_microbatch_grads: false
+  linear_value: false
+  attention_split_k: 1
+  iteration_graph: false
+  triton_mlp: false
+  dynamo_cache_size: 64

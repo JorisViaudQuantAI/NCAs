@@ -1,0 +1,50 @@
+# Sudoku-OOD, "public-code recipe" arm of an A/B against configs/sudoku_ood.yaml: the same task,
+# data, model preset and validation, with the training-recipe switches set to the behaviour of
+# the authors' public JAX code (see the config-key table of docs/PAPER_MAP.md). The lines
+# marked "public code" or "pilot" are the only differences from configs/sudoku_ood.yaml.
+task:
+  name: sudoku_ood
+  train: {n: 9000, source: official}   # never the generator (DEVIATIONS 2026-10-12)
+  val: {split: val, n: 180, source: official}    # SAT-Net validation boards, never the test set
+  test: {source: official}   # evaluations compared with the paper never fall back to the generator
+model:
+  preset: sudoku_ood
+  overrides:   # public code: tangent update, noise after the normalisation, normalised start, |x| + 1e-6, init, 10-token readout
+    project_update: true
+    noise_after_norm: true
+    norm_init: true
+    norm_style: norm_eps
+    init_style: public
+    output_tokens: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+train:
+  steps: 20000                  # pilot (configs/sudoku_ood.yaml: 50000; paper: 150000)
+  batch_size: 256
+  pool_mult: 4
+  seed_ratio: 0.5
+  rollout: 48
+  chunk: 48
+  loss_window: all
+  loss: mse
+  loss_reduce: mean             # public code: MSE averaged over the output channels
+  lr: 1.0e-4
+  schedule: cosine
+  cosine_floor: 1.0             # public code: end value = peak, constant after the warmup
+  warmup_ratio: 0.02
+  init_lr_ratio: 10.0           # public code: the warmup goes from 10 x lr down to lr
+  weight_decay: 1.0e-4
+  betas: [0.9, 0.95]            # public code
+  grad_clip: 1.0
+  ema: 0.999
+  ema_warmup: false             # public code: constant EMA decay from step 0
+  noise: {p_t: 0.1, p_s: 0.2, sigma: 0.15}
+  damage: {p: 0.1, n: 4, r_min: 0.1, r_max: 0.4, fill: 1.0, geometry: official}   # public code: n 4, fill 1 (normalised model), make_circle_masks discs
+  swap: {p: 0.1}
+  swap_source: pool             # public code: the swapped board comes from another pool entry
+  batch_noise: {p: 0.1, ps: 0.2, sigma: 0.15}   # public code: noise on the prepared batch
+  augment: true
+  grad_checkpoint: false        # local: 1.7 GB of VRAM without it, 0.98 vs 1.2 s/step (DEVIATIONS 2026-10-11)
+  amp: true                     # local: bf16 autocast, 0.65 s/step with the line above
+  log_every: 50
+  eval_every: 2500
+  checkpoint_every: 1000
+  eval: {n: 180, depth: 96, k: 1}

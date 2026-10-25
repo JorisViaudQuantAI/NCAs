@@ -1,0 +1,64 @@
+{
+  "depth": 300,
+  "k": 8,
+  "p_t": 0.1,
+  "p_s": 0.2,
+  "r": 0.25,
+  "n_boards": 500,
+  "source": "official",
+  "max_cells": 2000000,
+  "rows": [
+    {
+      "sigma": 0,
+      "k1": 1.0,
+      "conf_k": 1.0,
+      "pass_k": 1.0,
+      "mean_trial": 1.0
+    },
+    {
+      "sigma": 0.1,
+      "k1": 1.0,
+      "conf_k": 1.0,
+      "pass_k": 1.0,
+      "mean_trial": 1.0
+    },
+    {
+      "sigma": 0.2,
+      "k1": 1.0,
+      "conf_k": 1.0,
+      "pass_k": 1.0,
+      "mean_trial": 1.0
+    },
+    {
+      "sigma": 0.3,
+      "k1": 1.0,
+      "conf_k": 1.0,
+      "pass_k": 1.0,
+      "mean_trial": 1.0
+    },
+    {
+      "sigma": 0.5,
+      "k1": 1.0,
+      "conf_k": 1.0,
+      "pass_k": 1.0,
+      "mean_trial": 1.0
+    },
+    {
+      "sigma": 0.7,
+      "k1": 1.0,
+      "conf_k": 1.0,
+      "pass_k": 1.0,
+      "mean_trial": 1.0
+    },
+    {
+      "sigma": 1.0,
+      "k1": 1.0,
+      "conf_k": 1.0,
+      "pass_k": 1.0,
+      "mean_trial": 1.0
+    }
+  ],
+  "run": "runs/maze_ood/seed0",
+  "seed": 0,
+  "seconds": 38.91622169999755
+}
